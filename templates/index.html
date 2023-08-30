@@ -1,0 +1,37 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Music Recommendation Website
+{% endblock %}
+
+{% block main %}
+    <h1>Welcome to the Music Recommendation Website!</h1> <br>
+
+    <div class="alert alert-primary mb-0 text-center">
+        {% if session['user_id'] %}
+            <p>Hello, user!</p>
+            <p>Explore personalized music recommendations based on your preferences.</p>
+            <a href="/recommendations" class="btn btn-primary">View Recommendations</a>
+        {% else %}
+            <p>Welcome to our music community!</p>
+            <p>Sign up or log in to discover music tailored to your tastes.</p>
+            <a href="/register" class="btn btn-primary">Sign Up</a>
+            <a href="/login" class="btn btn-secondary">Log In</a>
+        {% endif %}
+    </div>
+
+    <div class="popular-music">
+        <h2>Popular Music</h2>
+        <!-- Display popular music albums, artists, or tracks here -->
+    </div>
+
+    <div class="featured-playlists">
+        <h2>Featured Playlists</h2>
+        <!-- Display featured playlists or curated collections here -->
+    </div>
+
+    <div class="new-releases">
+        <h2>New Releases</h2>
+        <!-- Display recently released albums or tracks here -->
+    </div>
+{% endblock %}
