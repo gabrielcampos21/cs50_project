@@ -5,6 +5,11 @@
 {% endblock %}
 
 {% block main %}
+    <head>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+        <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    </head>
     <h1>Discover and explore similar coop games</h1> <br>
     <form action="/search" method="post">
         <div class="mb-3">
@@ -15,4 +20,24 @@
         </div>
         <button class="btn btn-primary" type="submit">Search</button>
     </form>
+    <script>
+        $(function() {
+            $('#title').autocomplete({
+                source: function(request, response) {
+                    $.ajax({
+                        url: '/complete', // Change this URL to match your Flask route
+                        method: 'POST',
+                        data: {
+                            search: request.term
+                        },
+                        dataType: 'json',
+                        success: function(data) {
+                            response(data); // Pass the fetched data to the autocomplete
+                        }
+                    });
+                },
+                minLength: 2
+            });
+        });
+    </script>   
 {% endblock %}

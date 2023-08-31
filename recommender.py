@@ -14,7 +14,8 @@ with open(df_filename, 'rb') as pickle_file:
 with open(indices_filename, 'rb') as pickle_file:
     indices = pickle.load(pickle_file)    
 
-# TODO: drop reviews column
+def complete(text):
+    return indices[indices.index.str.find(text) != -1]
 
 # Function that takes in game title as input and outputs top 10 most similar games
 def get_recommendations(name, cosine_sim=cosine_sim):
