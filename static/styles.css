@@ -21,3 +21,68 @@ nav .navbar-brand .green
 {
     color: #2e944b;
 }
+
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4d7;
+}
+
+h1 {
+    color: #333;
+}
+
+.alert {
+    background-color: #ffc107;
+    color: #333;
+    padding: 10px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+ol {
+    list-style-type: none;
+    padding: 0;
+}
+
+li {
+    margin-bottom: 10px;
+    padding: 10px;
+    background-color: #fff;
+    border: 1px solid #e61d1d;
+    border-radius: 7px;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+
+    transition: background-color 0.3s;
+}
+
+li:hover {
+    background-color: #f3f3f300;
+}
+
+a{
+    color:#333;
+}
+
+a:link {
+    text-decoration: none;
+}
+
+a:hover{
+    color: #0013be;
+}
+
+a:link, a:visited {
+    color: black;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    transition: background-color 0.3s;
+}
+  
+  a:hover, a:active {
+    scale: 1.009;
+}

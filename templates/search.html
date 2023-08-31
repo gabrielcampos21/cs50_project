@@ -6,11 +6,21 @@
 
 {% block main %}
     <h1>Discover and explore similar coop games</h1> <br>
-
-    <div class="alert alert-primary mb-0 text-center">
-        <p>Please note that the website is still in development</p>
-    </div>
     <div>
-        games
+        {% if games %}
+            <h2>Game: {{title}}</h2>
+            <ol>
+                {% for game in games %}
+                    <li><a href="https://store.steampowered.com/app/{{ game['AppID']}}">{{ game['Name'] }}
+                        <br> Score: {{game['PositiveRate']}} 
+                        <br> Categories: {{game['Categories']}} 
+                    </a></li>
+                {% endfor %}
+            </ol>
+
+        {% else %}
+            <h3>Game not found!</h3> 
+            <h6>{{title}}</h6>
+        {% endif %}
     </div>
 {% endblock %}

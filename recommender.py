@@ -14,31 +14,30 @@ with open(df_filename, 'rb') as pickle_file:
 with open(indices_filename, 'rb') as pickle_file:
     indices = pickle.load(pickle_file)    
 
-# drop reviews column
+# TODO: drop reviews column
 
-# Function that takes in movie title as input and outputs most similar movies
+# Function that takes in game title as input and outputs top 10 most similar games
 def get_recommendations(name, cosine_sim=cosine_sim):
-    # Get the index of the movie that matches the title
+    # Get the index of the game that matches the title
     if name not in indices:
-      return "Game was not found"
+      return None
     idx = indices[name]
     #if idx > 35500: return "not in index range"
     if type(idx) == pd.core.series.Series: idx = idx[0]
 
-    # Get the pairwsie similarity scores of all movies with that movie
+    # Get the pairwsie similarity scores of all games with that game
     sim_scores = list(enumerate(cosine_sim[idx]))
 
-    # Sort the movies based on the similarity scores
+    # Sort the games based on the similarity scores
     sim_scores = sorted(sim_scores, key=lambda x: x[1], reverse=True)
 
-    # Get the scores of the 10 most similar movies
+    # Get the top 10 similarity scores
     sim_scores = sim_scores[1:11]
 
-    # Get the movie indices
+    # Get the games indices
     game_indices = [i[0] for i in sim_scores]
 
-    print(df.columns)
-    # Return the top 10 most similar movies
-    return df.iloc[game_indices]
+    # Return the top 10 most similar games
+    return df.iloc[game_indices].iloc()
 
 #print(get_recommendations("Unturned"))
