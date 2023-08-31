@@ -1,37 +1,22 @@
 {% extends "layout.html" %}
 
 {% block title %}
-    Music Recommendation Website
+    COOP Discover
 {% endblock %}
 
 {% block main %}
-    <h1>Welcome to the Music Recommendation Website!</h1> <br>
+    <h1>Discover and explore similar coop games</h1> <br>
 
     <div class="alert alert-primary mb-0 text-center">
-        {% if session['user_id'] %}
-            <p>Hello, user!</p>
-            <p>Explore personalized music recommendations based on your preferences.</p>
-            <a href="/recommendations" class="btn btn-primary">View Recommendations</a>
-        {% else %}
-            <p>Welcome to our music community!</p>
-            <p>Sign up or log in to discover music tailored to your tastes.</p>
-            <a href="/register" class="btn btn-primary">Sign Up</a>
-            <a href="/login" class="btn btn-secondary">Log In</a>
-        {% endif %}
+        <p>Please note that the website is still in development</p>
     </div>
-
-    <div class="popular-music">
-        <h2>Popular Music</h2>
-        <!-- Display popular music albums, artists, or tracks here -->
-    </div>
-
-    <div class="featured-playlists">
-        <h2>Featured Playlists</h2>
-        <!-- Display featured playlists or curated collections here -->
-    </div>
-
-    <div class="new-releases">
-        <h2>New Releases</h2>
-        <!-- Display recently released albums or tracks here -->
-    </div>
+    <form action="/search" method="post">
+        <div class="mb-3">
+            <label>Search</label>
+        </div>
+        <div class="mb-3">
+            <input autocomplete="off" autofocus class="form-control mx-auto w-auto" id="title" name="title" placeholder="Game title" type="text">
+        </div>
+        <button class="btn btn-primary" type="submit">Search</button>
+    </form>
 {% endblock %}
