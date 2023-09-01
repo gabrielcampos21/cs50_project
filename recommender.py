@@ -1,9 +1,9 @@
 import pickle
 import pandas as pd
 
-cosine_sim_filename = "cosine_similarity_matrix.pkl"
-df_filename = "df.pkl"
-indices_filename = "indices.pkl"
+cosine_sim_filename = "pickle_files/cosine_similarity_matrix.pkl"
+df_filename = "pickle_files/df.pkl"
+indices_filename = "pickle_files/indices.pkl"
 
 all_languages = []
 
