@@ -41,4 +41,3 @@ def get_recommendations(name, cosine_sim=cosine_sim):
     # Return the top 10 most similar games
     return df.iloc[game_indices].iloc()
 
-#print(get_recommendations("Unturned"))

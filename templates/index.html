@@ -10,11 +10,11 @@
         <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
         <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     </head>
-    <h1>Discover and explore similar coop games</h1> <br>
+    <main class="px-3">
+        <h1>Discover and explore similar coop games</h1>
+        <p class="lead">Just type the name of a coop game you like and we'll find 10 similar games!</p>
+      </main>
     <form action="/search" method="post">
-        <div class="mb-3">
-            <label>Search</label>
-        </div>
         <div class="mb-3">
             <input autocomplete="off" autofocus class="form-control mx-auto w-auto" id="title" name="title" placeholder="Game title" type="text">
         </div>
@@ -25,14 +25,14 @@
             $('#title').autocomplete({
                 source: function(request, response) {
                     $.ajax({
-                        url: '/complete', // Change this URL to match your Flask route
+                        url: '/complete',
                         method: 'POST',
                         data: {
                             search: request.term
                         },
                         dataType: 'json',
                         success: function(data) {
-                            response(data); // Pass the fetched data to the autocomplete
+                            response(data); 
                         }
                     });
                 },
