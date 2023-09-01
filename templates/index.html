@@ -14,11 +14,55 @@
         <h1>Discover and explore similar coop games</h1>
         <p class="lead">Just type the name of a coop game you like and we'll find 10 similar games!</p>
       </main>
-    <form action="/search" method="post">
-        <div class="mb-3">
-            <input autocomplete="off" autofocus class="form-control mx-auto w-auto" id="title" name="title" placeholder="Game title" type="text">
+      <form action="/search" method="post" class="container">
+        <div class="row">
+            <div class="mb-3">
+                <label for="title" class="form-label">Game Title:</label>
+                <input autocomplete="off" autofocus class="form-control" id="title" name="title" type="text" placeholder="Enter game title">
+            </div>
+            <div class="b-divider"></div>
+            <p>Filter results:</p>
+            <div class="col-md-3 mb-3">
+                <label for="release-date-start" class="form-label">Start Date:</label>
+                <input type="date" class="form-control" id="release-date-start" name="release-date-start">
+            </div>
+            <div class="col-md-3 mb-3">
+                <label for="release-date-end" class="form-label">End Date:</label>
+                <input type="date" class="form-control" id="release-date-end" name="release-date-end">
+            </div>
+            <div class="col-md-6 mb-3">
+                <label for="num-players" class="form-label">Number of Players:</label>
+                <select class="form-select" id="num-players" name="num-players">
+                    <option value="">Any</option>
+                    {% for count in player_counts %}
+                        <option value="{{ count }}">{{ count }} Player{% if count != 1 %}s{% endif %}</option>
+                    {% endfor %}
+                </select>
+            </div>
         </div>
-        <button class="btn btn-primary" type="submit">Search</button>
+        <div class="row">
+            <div class="mb-3">
+                <label class="form-label">Select Languages:</label>
+                <div class="row">
+                    {% for i in range(3) %}
+                        <div class="col-md-4">
+                            {% for j in range(i*11, (i+1)*11) %}
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="{{ languages[j] }}" id="{{ languages[j] }}" name="selected-languages[]">
+                                    <label class="form-check-label">
+                                        {{ languages[j] }}
+                                    </label>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="mb-lg-3">
+                <div class="b-divider"></div>
+                <button class="btn btn-primary" type="submit">Search</button>
+            </div>
+        </div>
     </form>
     <script>
         $(function() {
@@ -39,5 +83,5 @@
                 minLength: 2
             });
         });
-    </script>   
+    </script>       
 {% endblock %}

@@ -5,6 +5,8 @@ cosine_sim_filename = "cosine_similarity_matrix.pkl"
 df_filename = "df.pkl"
 indices_filename = "indices.pkl"
 
+all_languages = []
+
 with open(cosine_sim_filename, 'rb') as pickle_file:
     cosine_sim = pickle.load(pickle_file)
 
@@ -16,6 +18,34 @@ with open(indices_filename, 'rb') as pickle_file:
 
 def complete(text):
     return indices[indices.index.str.find(text) != -1]
+
+def get_all_languages():
+    global all_languages
+    if (len(all_languages) > 0):
+        return all_languages
+    
+    # Mapping for combining languages
+    language_mapping = {
+        'Portuguese - Brazil': 'Portuguese',
+        'Portuguese - Portugal': 'Portuguese',
+        'Spanish - Latin America': 'Spanish',
+        'Spanish - Spain': 'Spanish',
+    }
+
+    # Iterate through each row in the Series and extend the all_languages list
+    for languages in df['Supported languages']:
+        languages = languages.replace('[', '').replace(']', '').replace("'", '').split(',')
+        languages = [language.strip() for language in languages]
+        
+        # Apply language mapping
+        languages = [language_mapping.get(language, language) for language in languages]
+        
+        all_languages.extend(languages)
+
+    # Use set to get unique language names
+    all_languages = list(set(all_languages))
+    all_languages.sort()
+    return all_languages
 
 # Function that takes in game title as input and outputs top 10 most similar games
 def get_recommendations(name, cosine_sim=cosine_sim):

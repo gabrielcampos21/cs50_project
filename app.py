@@ -20,6 +20,17 @@ def search():
 
 @app.route("/", methods=["GET"])
 def index():
-    return render_template("index.html")
+    return render_template("index.html", player_counts = ['1 Player', '2 Players', '3+ Players'], languages=recommender.get_all_languages())
+
+
+# TODO
+# Filter by year of release 'Release date'
+# Filter by number of owners 'Estimated owners'
+# Filter by number of users rates 'Positive' + 'Negative'
+# Filter by minimum positive rate 'Positive' / 'Positive' + 'Negative'
+# Filter by category/tags 'Categories' 'Tags'
+# Filter by language 'Supported languages'
+# Filter by game genre 'Genres'
+# Filter by price 'Price'
 
 app.run(debug=True)

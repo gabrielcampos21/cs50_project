@@ -5,8 +5,8 @@
 {% endblock %}
 
 {% block main %}
-    <div class="container py-5">
-        <div class="px-4 py-5 my-5 text-center">
+    <div class="container-fluid">
+      <div class="px-4 py-5 my-5 text-center">
             <img class="d-block mx-auto mb-4" src="/docs/5.3/assets/brand/bootstrap-logo.svg" alt="" width="72" height="57">
             <h1 class="display-5 fw-bold text-body-emphasis">Discover and Explore Similar Cooperative Games</h1>
             <div class="col-lg-6 mx-auto">
@@ -15,26 +15,29 @@
           </div>
 
         {% if games %}
-            <ul class="list-group">
-                {% for game in games %}
-                    <li class="list-group-item">
-                        <div class="container my-5">
-                            <div class="row p-4 pb-0 pe-lg-0 pt-lg-5 align-items-center rounded-3 border shadow-lg">
-                              <div class="col-lg-7 p-3 p-lg-5 pt-lg-3">
-                                <h1 class="display-4 fw-bold lh-1 text-body-emphasis">{{ game['Name'] }}</h1>
-                                <p class="lead">{{ game['Categories'] }}</p>
-                                <div class="d-grid gap-2 d-md-flex justify-content-md-start mb-4 mb-lg-3">
-                                  <button type="button" onclick="window.location.href='https://store.steampowered.com/app/{{ game['AppID']}}'" class="btn btn-primary btn-lg px-4 me-md-2 fw-bold">Steam page</button>
-                                </div>
-                              </div>
-                              <div class="col-lg-4 offset-lg-1 p-0 overflow-hidden shadow-lg">
-                                  <img class="rounded-lg-3" src="https://cdn.cloudflare.steamstatic.com/steam/apps/{{game['AppID']}}/header.jpg" alt="" width="405">
-                              </div>
-                            </div>
-                          </div>
-                    </li>
-                {% endfor %}
-            </ul>
+        <ul class="list-group col">
+          {% for game in games %}
+          <div class="container my-5">
+            <div class="position-relative p-5 align-items-center bg-body border border-dashed rounded-5">
+              <h1 class="display-4 fw-bold lh-1 text-body-emphasis">{{ game['Name'] }}</h1>
+              <div class="b-game-divider"></div>
+              <p class="lead col-lg-6 mx-auto mb-4">
+                Genres: {{ game['Genres'] }}
+              </p>
+              <div class="b-game-divider"></div>
+              <div class="col-lg-0 p-1 d-flex justify-content-center align-items-center">
+                <img src="https://cdn.cloudflare.steamstatic.com/steam/apps/{{game['AppID']}}/header.jpg" alt="{{ game['Name'] }}">
+              </div> 
+              <div class="b-game-divider"></div>
+              <div class="b-game-divider"></div>        
+              <div>
+                <a href="https://store.steampowered.com/app/{{ game['AppID'] }}" class="btn btn-primary btn-lg px-4 me-md-2 fw-bold" target="_blank">Visit Steam Page</a>
+            </div>
+            </div>
+          </div>
+          {% endfor %}
+        </ul>
+
         {% else %}
             <div class="text-center mt-4">
                 <h3>Game not found!</h3>
