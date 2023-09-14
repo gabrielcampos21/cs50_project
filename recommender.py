@@ -63,11 +63,19 @@ def get_recommendations(name, min_rating=0, min_reviews=0, max_price=None, min_r
     sim_scores = sorted(sim_scores, key=lambda x: x[1], reverse=True)
 
     # Get the top 10 similarity scores
-    sim_scores = sim_scores[1:11]
+    #sim_scores = sim_scores[1:11]
 
     # Get the games indices
     game_indices = [i[0] for i in sim_scores]
+    games = df.iloc[game_indices]
+    print(games[games['Release date'] >= int(min_release_year)])
+    
+    # missing price filter
+    filtered_games = games[games['PositiveRate'] >= float(min_rating) &
+                        (games['Negative'] + games['Positive']) >= int(min_reviews) &
+                        games['Release date'] >= int(min_release_year) & 
+                        games['Release date'] < int(max_release_year)]
 
     # Return the top 10 most similar games
-    return df.iloc[game_indices].iloc()
+    return filtered_games.head(11)
 
