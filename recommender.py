@@ -48,7 +48,7 @@ def get_all_languages():
     return all_languages
 
 # Function that takes in game title as input and outputs top 10 most similar games
-def get_recommendations(name, cosine_sim=cosine_sim):
+def get_recommendations(name, min_rating=0, min_reviews=0, max_price=None, min_release_year=None, max_release_year=None, cosine_sim=cosine_sim):
     # Get the index of the game that matches the title
     if name not in indices:
       return None

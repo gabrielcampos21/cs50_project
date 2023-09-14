@@ -15,12 +15,15 @@ def complete():
 
 @app.route("/search", methods=["POST"])
 def search():
-    games = recommender.get_recommendations(request.form.get('title'))
+    form = request.form
+    games = recommender.get_recommendations(request.form.get('title'), request.form.get('min-score-rate'), request.form.get('min-reviews'),
+                                            min_release_year=request.form.get('release-date-start'), 
+                                            max_release_year=request.form.get('release-date-end'))
     return render_template("search.html", title=request.form.get('title'), games = games)
 
 @app.route("/", methods=["GET"])
 def index():
-    return render_template("index.html", player_counts = ['1 Player', '2 Players', '3+ Players'], languages=recommender.get_all_languages())
+    return render_template("index.html", languages=recommender.get_all_languages())
 
 
 # TODO

@@ -23,22 +23,29 @@
             <div class="b-divider"></div>
             <p>Filter results:</p>
             <div class="col-md-3 mb-3">
-                <label for="release-date-start" class="form-label">Start Date:</label>
-                <input type="date" class="form-control" id="release-date-start" name="release-date-start">
+                <label for="release-date-start" class="form-label">Start Year:</label>
+                <input type="number" class="form-control" id="release-date-start" name="release-date-start" min="2006" max="2023" value="2006">
             </div>
             <div class="col-md-3 mb-3">
-                <label for="release-date-end" class="form-label">End Date:</label>
-                <input type="date" class="form-control" id="release-date-end" name="release-date-end">
+                <label for="release-date-end" class="form-label">End Year:</label>
+                <input type="number" class="form-control" id="release-date-end" name="release-date-end" min="2006" max="2023" value="2023">
             </div>
-            <div class="col-md-6 mb-3">
-                <label for="num-players" class="form-label">Number of Players:</label>
+            <div class="col-md-3 mb-3">
+                <label for="min-reviews" class="form-label">Minimum number of reviews:</label>
+                <input type="number" class="form-control" id="min-reviews" name="min-reviews" min="0" max="90000" value="0">
+            </div>
+            <div class="col-md-3 mb-3">
+                <label for="min-score-rate" class="form-label">Minimum Score Rate:</label>
+                <input type="number" class="form-control" id="min-score-rate" name="min-score-rate" min="0" max="10" step="0.1" value="0.0">
+            </div>
+            <div class="col-md-3 mb-3">
+                <label for="price" class="form-label">Price:</label>
                 <select class="form-select" id="num-players" name="num-players">
                     <option value="">Any</option>
-                    {% for count in player_counts %}
-                        <option value="{{ count }}">{{ count }} Player{% if count != 1 %}s{% endif %}</option>
-                    {% endfor %}
+                    <option value="paid">Paid</option>
+                    <option value="free">Free</option>
                 </select>
-            </div>
+            </div>     
         </div>
         <div class="row">
             <div class="mb-3">
