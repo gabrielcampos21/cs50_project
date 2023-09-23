@@ -14,16 +14,18 @@ with open(df_filename, 'rb') as pickle_file:
     df = pickle.load(pickle_file)
 
 with open(indices_filename, 'rb') as pickle_file:
-    indices = pickle.load(pickle_file)    
+    indices = pickle.load(pickle_file)
+
 
 def complete(text):
     return indices[indices.index.str.find(text) != -1]
+
 
 def get_all_languages():
     global all_languages
     if (len(all_languages) > 0):
         return all_languages
-    
+
     # Mapping for combining languages
     language_mapping = {
         'Portuguese - Brazil': 'Portuguese',
@@ -34,12 +36,14 @@ def get_all_languages():
 
     # Iterate through each row in the Series and extend the all_languages list
     for languages in df['Supported languages']:
-        languages = languages.replace('[', '').replace(']', '').replace("'", '').split(',')
+        languages = languages.replace(
+            '[', '').replace(']', '').replace("'", '').split(',')
         languages = [language.strip() for language in languages]
-        
+
         # Apply language mapping
-        languages = [language_mapping.get(language, language) for language in languages]
-        
+        languages = [language_mapping.get(
+            language, language) for language in languages]
+
         all_languages.extend(languages)
 
     # Use set to get unique language names
@@ -48,13 +52,16 @@ def get_all_languages():
     return all_languages
 
 # Function that takes in game title as input and outputs top 10 most similar games
+
+
 def get_recommendations(name, min_rating=0, min_reviews=0, max_price=None, min_release_year=None, max_release_year=None, cosine_sim=cosine_sim):
     # Get the index of the game that matches the title
     if name not in indices:
-      return None
+        return None
     idx = indices[name]
-    #if idx > 35500: return "not in index range"
-    if type(idx) == pd.core.series.Series: idx = idx[0]
+    # if idx > 35500: return "not in index range"
+    if type(idx) == pd.core.series.Series:
+        idx = idx[0]
 
     # Get the pairwsie similarity scores of all games with that game
     sim_scores = list(enumerate(cosine_sim[idx]))
@@ -63,18 +70,24 @@ def get_recommendations(name, min_rating=0, min_reviews=0, max_price=None, min_r
     sim_scores = sorted(sim_scores, key=lambda x: x[1], reverse=True)
 
     # Get the top 10 similarity scores
-    #sim_scores = sim_scores[1:11]
+    # sim_scores = sim_scores[1:11]
 
     # Get the games indices
     game_indices = [i[0] for i in sim_scores]
     games = df.iloc[game_indices]
-    
+
     # missing price filter
     filtered_games = games[(games['PositiveRate'] >= float(min_rating)/10) &
-                        ((games['Negative'] + games['Positive']) >= int(min_reviews)) &
-                        (games['Release date'] >= min_release_year) & 
-                        (games['Release date'] < max_release_year)]
-    
+                           ((games['Negative'] + games['Positive']) >= int(min_reviews)) &
+                           (games['Release date'] >= min_release_year) &
+                           (games['Release date'] < max_release_year) &
+                           (
+        games.apply(lambda row: (
+            (max_price == 'free' and row['Price'] == 0) or
+            (max_price == 'paid' and row['Price'] > 0) or
+            (max_price == 'any')
+        ), axis=1)
+    )]
+
     # Return the top 10 most similar games
     return filtered_games.head(10).iloc()
-
