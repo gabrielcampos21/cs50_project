@@ -1,65 +1,33 @@
 import pickle
 import pandas as pd
 
-cosine_sim_filename = "pickle_files/cosine_similarity_matrix.pkl"
-df_filename = "pickle_files/df.pkl"
-indices_filename = "pickle_files/indices.pkl"
+COSINE_SIM_FILENAME = "pickle_files/cosine_similarity_matrix.pkl"
+DF_FILENAME = "pickle_files/df.pkl"
+INDICES_FILENAME = "pickle_files/indices.pkl"
 
-all_languages = []
-
-with open(cosine_sim_filename, 'rb') as pickle_file:
+# Loading the files into memory
+with open(COSINE_SIM_FILENAME, 'rb') as pickle_file:
     cosine_sim = pickle.load(pickle_file)
 
-with open(df_filename, 'rb') as pickle_file:
+with open(DF_FILENAME, 'rb') as pickle_file:
     df = pickle.load(pickle_file)
 
-with open(indices_filename, 'rb') as pickle_file:
+with open(INDICES_FILENAME, 'rb') as pickle_file:
     indices = pickle.load(pickle_file)
 
 
+# Autocomplete function
 def complete(text):
     return indices[indices.index.str.find(text) != -1]
 
 
-def get_all_languages():
-    global all_languages
-    if (len(all_languages) > 0):
-        return all_languages
-
-    # Mapping for combining languages
-    language_mapping = {
-        'Portuguese - Brazil': 'Portuguese',
-        'Portuguese - Portugal': 'Portuguese',
-        'Spanish - Latin America': 'Spanish',
-        'Spanish - Spain': 'Spanish',
-    }
-
-    # Iterate through each row in the Series and extend the all_languages list
-    for languages in df['Supported languages']:
-        languages = languages.replace(
-            '[', '').replace(']', '').replace("'", '').split(',')
-        languages = [language.strip() for language in languages]
-
-        # Apply language mapping
-        languages = [language_mapping.get(
-            language, language) for language in languages]
-
-        all_languages.extend(languages)
-
-    # Use set to get unique language names
-    all_languages = list(set(all_languages))
-    all_languages.sort()
-    return all_languages
-
-# Function that takes in game title as input and outputs top 10 most similar games
-
-
-def get_recommendations(name, min_rating=0, min_reviews=0, max_price=None, min_release_year=None, max_release_year=None, cosine_sim=cosine_sim):
+# Function that takes in game title as input and outputs top x most similar games
+def get_recommendations(name, min_rating=0, min_reviews=0, max_price=None, min_release_year=None, max_release_year=None, recommendations_count=10, cosine_sim=cosine_sim):
     # Get the index of the game that matches the title
     if name not in indices:
         return None
     idx = indices[name]
-    # if idx > 35500: return "not in index range"
+
     if type(idx) == pd.core.series.Series:
         idx = idx[0]
 
@@ -69,8 +37,8 @@ def get_recommendations(name, min_rating=0, min_reviews=0, max_price=None, min_r
     # Sort the games based on the similarity scores
     sim_scores = sorted(sim_scores, key=lambda x: x[1], reverse=True)
 
-    # Get the top 10 similarity scores
-    # sim_scores = sim_scores[1:11]
+    # Get the top x similarity scores
+    sim_scores = sim_scores[1:recommendations_count+1]
 
     # Get the games indices
     game_indices = [i[0] for i in sim_scores]
@@ -80,14 +48,17 @@ def get_recommendations(name, min_rating=0, min_reviews=0, max_price=None, min_r
     filtered_games = games[(games['PositiveRate'] >= float(min_rating)/10) &
                            ((games['Negative'] + games['Positive']) >= int(min_reviews)) &
                            (games['Release date'] >= min_release_year) &
-                           (games['Release date'] < max_release_year) &
-                           (
+                           (games['Release date'] < max_release_year)]
+
+    '''
+    (
         games.apply(lambda row: (
-            (max_price == 'free' and row['Price'] == 0) or
-            (max_price == 'paid' and row['Price'] > 0) or
+            (max_price == 'free' and float(row['Price']) == 0) or
+            (max_price == 'paid' and float(row['Price'] > 0)) or
             (max_price == 'any')
         ), axis=1)
-    )]
+    )
+    '''
 
     # Return the top 10 most similar games
-    return filtered_games.head(10).iloc()
+    return filtered_games.iloc()

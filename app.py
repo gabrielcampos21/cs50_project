@@ -2,12 +2,11 @@ import recommender
 from flask import Flask, flash, redirect, render_template, request, jsonify
 
 app = Flask(__name__)
-app.secret_key = "12345"
 
 
 @app.route('/complete', methods=['POST'])
 def complete():
-    search_term = request.form.get('search')
+    search_term = request.get_json().get('search')
     autocomplete_results = recommender.complete(search_term)
     suggestions = autocomplete_results.index.str.contains(
         search_term, case=False)
@@ -18,6 +17,7 @@ def complete():
 
 @app.route("/search", methods=["POST"])
 def search():
+    print("searching")
     games = recommender.get_recommendations(name=request.form.get('title'),
                                             min_rating=request.form.get(
                                                 'min-score-rate'),
@@ -27,23 +27,16 @@ def search():
                                                 'max_price'),
                                             min_release_year=request.form.get(
                                                 'release-date-start'),
-                                            max_release_year=request.form.get('release-date-end'))
+                                            max_release_year=request.form.get(
+                                                'release-date-end'),
+                                            recommendations_count=int(request.form.get('recommendations_count')))
+
     return render_template("search.html", title=request.form.get('title'), games=games)
 
 
 @app.route("/", methods=["GET"])
 def index():
-    return render_template("index.html", languages=recommender.get_all_languages())
+    return render_template("index.html")
 
-
-# TODO
-# Filter by year of release 'Release date'
-# Filter by number of owners 'Estimated owners'
-# Filter by number of users rates 'Positive' + 'Negative'
-# Filter by minimum positive rate 'Positive' / 'Positive' + 'Negative'
-# Filter by category/tags 'Categories' 'Tags'
-# Filter by language 'Supported languages'
-# Filter by game genre 'Genres'
-# Filter by price 'Price'
 
 app.run(debug=True)

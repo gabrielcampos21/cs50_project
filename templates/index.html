@@ -50,7 +50,7 @@ COOP Discover
             </label>
             <input type="number" class="form-control" id="min-reviews" name="min-reviews" min="0" max="90000" value="0">
         </div>
-        <div class="col-md-6 mb-3">
+        <div class="col-md-4 mb-3">
             <label for="min-score-rate" class="form-label tooltip-parent">*Minimum Score Rate:
                 <span class="tooltip-text">This will filter games that don't have this minimum score rate (this isn't
                     always accurate).</span>
@@ -58,7 +58,7 @@ COOP Discover
             <input type="number" class="form-control" id="min-score-rate" name="min-score-rate" min="0" max="10"
                 step="0.1" value="0.0">
         </div>
-        <div class="col-md-6 mb-3">
+        <div class="col-md-4 mb-3">
             <label for="price" class="form-label tooltip-parent">*Price:
                 <span class="tooltip-text">This will filter games based on price (this isn't
                     always accurate).</span>
@@ -68,6 +68,12 @@ COOP Discover
                 <option value="paid">Paid</option>
                 <option value="free">Free</option>
             </select>
+        </div>
+        <div class="col-md-4 mb-3">
+            <label for="recommendations_count" class="form-label tooltip-parent">Recommendations Count:
+            </label>
+            <input type="number" class="form-control" id="recommendations_count" name="recommendations_count" min="10"
+                max="10000" step="1" value="10">
         </div>
     </div>
     <div class="row">
@@ -82,16 +88,16 @@ COOP Discover
     $(function () {
         $('#title').autocomplete({
             source: function (request, response) {
-                $.ajax({
-                    url: '/complete',
+                fetch('/complete', {
                     method: 'POST',
-                    data: {
+                    headers: new Headers({
+                        'Content-Type': 'application/json'
+                    }),
+                    body: JSON.stringify({
                         search: request.term
-                    },
-                    dataType: 'json',
-                    success: function (data) {
-                        response(data);
-                    }
+                    })
+                }).then(async function (data) {
+                    response(await data.json());
                 });
             },
             minLength: 2
