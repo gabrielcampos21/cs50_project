@@ -17,6 +17,11 @@ Tecnologies used:
 
 ## Motivation
 I decided to do this project because sometimes I find it hard to search and discover new games. With that problem and a desire to learn more about how recommendation systems work, I had the idea of creating a game recommender system based on coop Steam games.
+#### Some learning resources:
+- [Kaggle Learn courses](https://www.kaggle.com/learn)
+- [Kaggle Competitions](https://www.kaggle.com/competitions)
+- [Kaggle notebooks on recommendation systems](https://www.kaggle.com/search?q=recommendation)
+
 
 ## Project Files
 -  steam-co-op-game-recommender.ipynb -> this is the downloaded Kaggle notebook, which:
@@ -34,3 +39,7 @@ I decided to do this project because sometimes I find it hard to search and disc
 The point of having these pickle files is that I find it more convenient to download the dataset and generate the similarity matrixes on Kaggle, and then downloading them as files to be read by the website recommender python file. This way, I can choose when I want to update the games data and can use Kaggle's computer resources to do that faster.
 
 The Kaggle python notebook also contains a few examples of how the recommendation can be implemented and also how the search function works.
+
+## Demonstration
+[Youtube video](https://www.youtube.com/)
+
