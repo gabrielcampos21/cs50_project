@@ -31,19 +31,15 @@ def get_recommendations(name, min_rating=0, min_reviews=0, max_price=None, min_r
     if type(idx) == pd.core.series.Series:
         idx = idx[0]
 
-    # Get the pairwsie similarity scores of all games with that game
+    # Get the pairwise similarity scores of all games with that game
     sim_scores = list(enumerate(cosine_sim[idx]))
 
     # Sort the games based on the similarity scores
     sim_scores = sorted(sim_scores, key=lambda x: x[1], reverse=True)
 
-    # Get the games indices
     game_indices = [i[0] for i in sim_scores]
     games = df.iloc[game_indices]
 
-    print()
-
-    # missing price filter
     filtered_games = games[(games.apply(lambda row: (
         (max_price == 'free' and float(row['Price']) == 0) or
         (max_price == 'paid' and float(row['Price']) > 0) or

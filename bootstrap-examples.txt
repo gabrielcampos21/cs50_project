@@ -1,7 +1,0 @@
-https://getbootstrap.com/docs/5.3/examples/cover/#
-
-https://getbootstrap.com/docs/5.3/examples/jumbotrons/
-
-https://getbootstrap.com/docs/5.3/examples/list-groups/
-
-https://getbootstrap.com/docs/5.3/examples/heroes/
