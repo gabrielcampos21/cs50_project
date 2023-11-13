@@ -1,1 +1,4 @@
-pickle_files/cosine_similarity_matrix.pkl
+pickle_files/
+data/
+.vscode/
+__pycache__/
