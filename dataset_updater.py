@@ -6,6 +6,12 @@ import os
 import numpy as np
 import pandas as pd
 
+if (not os.path.isdir("pickle_files")):
+    os.makedirs("pickle_files")
+
+if (not os.path.isdir("data")):
+    os.makedirs("data")
+
 kaggle.api.authenticate()
 kaggle.api.dataset_download_files(
     'fronkongames/steam-games-dataset', path='data', unzip=True)
