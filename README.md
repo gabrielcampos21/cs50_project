@@ -11,7 +11,6 @@ Tecnologies used:
     - Website: Flask
 - HTML
 - JavaScript
-- JQuery
 - CSS
 - Bootstrap
 
@@ -46,5 +45,6 @@ The point of having these pickle files is that I find it more convenient to down
   - [Kaggle API Documentation](https://github.com/Kaggle/kaggle-api): To use the Kaggle API, sign up for a Kaggle account at https://www.kaggle.com. Then go to the 'Account' tab of your user profile (https://www.kaggle.com/<username>/account) and select 'Create API Token'. This will trigger the download of kaggle.json, a file containing your API credentials. Place this file in the location ~/.kaggle/kaggle.json (on Windows in the location C:\Users\<Windows-username>\.kaggle\kaggle.json - you can check the exact location, sans drive, with echo %HOMEPATH%).
 - clone repository
 - pip install -r requirements.txt
-- python dataset_updater.py
-- python app.py  
+- python3 dataset_updater.py
+- python3 app.py
+- open browser in http://127.0.0.1:5000/
