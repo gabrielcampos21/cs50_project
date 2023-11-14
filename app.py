@@ -1,5 +1,5 @@
 import recommender
-from flask import Flask, flash, redirect, render_template, request, jsonify
+from flask import Flask, render_template, request, jsonify
 
 app = Flask(__name__)
 
@@ -17,7 +17,6 @@ def complete():
 
 @app.route("/search", methods=["POST"])
 def search():
-    print("searching")
     games = recommender.get_recommendations(name=request.form.get('title'),
                                             min_rating=request.form.get(
                                                 'min-score-rate'),

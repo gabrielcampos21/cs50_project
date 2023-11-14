@@ -5,15 +5,9 @@ COOP Discover
 {% endblock %}
 
 {% block main %}
-
-<head>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
-    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-</head>
 <main class="px-3">
-    <h1>Discover and explore similar coop games</h1>
-    <p class="lead">Just type the name of a coop game you like and we'll find 10 similar games!</p>
+    <h1>Discover and explore the world of coop games</h1>
+    <p class="lead">Just type the name of a coop game you like, and we'll find 10 similar games!</p>
     <div class="b-divider" style="height: 30px;"></div>
 </main>
 <form action="/search" method="post" class="container">
@@ -24,6 +18,7 @@ COOP Discover
             </label>
             <input autocomplete="off" autofocus class="form-control" id="title" name="title" type="text"
                 placeholder="Enter game title">
+            <div id="suggestions-container"></div>
         </div>
         <div class="b-divider" style="height: 30px;"></div>
         <p class="tooltip-parent">Filter results:
@@ -71,8 +66,10 @@ COOP Discover
         </div>
         <div class="col-md-4 mb-3">
             <label for="recommendations_count" class="form-label tooltip-parent">Recommendations Count:
+                <span class="tooltip-text">Enter the number of games you want the website to recommend. This determines
+                    the quantity of suggested games based on your preferences.</span>
             </label>
-            <input type="number" class="form-control" id="recommendations_count" name="recommendations_count" min="10"
+            <input type="number" class="form-control" id="recommendations_count" name="recommendations_count" min="1"
                 max="10000" step="1" value="10">
         </div>
     </div>
@@ -85,22 +82,52 @@ COOP Discover
     <div class="b-divider" style="height: 13.5vh;"></div>
 </form>
 <script>
-    $(function () {
-        $('#title').autocomplete({
-            source: function (request, response) {
+    document.addEventListener("DOMContentLoaded", function () {
+        var titleInput = document.getElementById('title');
+        var suggestionsContainer = document.getElementById('suggestions-container');
+
+        titleInput.addEventListener('input', function () {
+            var searchTerm = titleInput.value;
+
+            if (searchTerm.length >= 2) {
                 fetch('/complete', {
                     method: 'POST',
-                    headers: new Headers({
+                    headers: {
                         'Content-Type': 'application/json'
-                    }),
+                    },
                     body: JSON.stringify({
-                        search: request.term
+                        search: searchTerm
                     })
-                }).then(async function (data) {
-                    response(await data.json());
-                });
-            },
-            minLength: 2
+                })
+                    .then(function (response) {
+                        return response.json();
+                    })
+                    .then(function (data) {
+                        // Clear previous suggestions
+                        suggestionsContainer.innerHTML = '';
+
+                        // Process the autocomplete data and update the UI
+                        data.forEach(function (suggestion) {
+                            var suggestionItem = document.createElement('div');
+                            suggestionItem.textContent = suggestion;
+                            suggestionItem.classList.add('suggestion');
+
+                            // Attach an event listener to handle the click on the suggestion
+                            suggestionItem.addEventListener('click', function () {
+                                titleInput.value = suggestion;
+                                suggestionsContainer.innerHTML = ''; // Clear suggestions after selection
+                            });
+
+                            suggestionsContainer.appendChild(suggestionItem);
+                        });
+                    })
+                    .catch(function (error) {
+                        console.error('Error fetching autocomplete data:', error);
+                    });
+            } else {
+                // Clear suggestions if the input is less than 2 characters
+                suggestionsContainer.innerHTML = '';
+            }
         });
     });
 </script>
