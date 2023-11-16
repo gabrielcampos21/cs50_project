@@ -1,15 +1,16 @@
 {% extends "layout.html" %}
 
 {% block title %}
-COOP Discover
+PickAGame
 {% endblock %}
 
 {% block main %}
 <div class="container-fluid">
   <div class="px-4 py-5 my-5 text-center">
-    <h1 class="display-5 fw-bold text-body-emphasis">Discover and Explore Similar Cooperative Games</h1>
+    <h1 class="display-5 fw-bold text-body-emphasis">Top games like {{ title }}</h1>
     <div class="col-lg-6 mx-auto">
-      <p class="lead mb-4">Top games like {{ title }}</p>
+      <div class="b-game-divider" style="height: 50px;"></div>
+      <img src="https://cdn.cloudflare.steamstatic.com/steam/apps/{{ title_id }}/header.jpg" alt="{{ title }}">
     </div>
   </div>
 

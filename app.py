@@ -17,6 +17,8 @@ def complete():
 
 @app.route("/search", methods=["POST"])
 def search():
+    title = request.form.get('title')
+    title_id = recommender.get_title_id(title)
     games = recommender.get_recommendations(name=request.form.get('title'),
                                             min_rating=request.form.get(
                                                 'min-score-rate'),
@@ -30,7 +32,7 @@ def search():
                                                 'release-date-end'),
                                             recommendations_count=int(request.form.get('recommendations_count')))
 
-    return render_template("search.html", title=request.form.get('title'), games=games)
+    return render_template("search.html", title=title, title_id=title_id, games=games)
 
 
 @app.route("/", methods=["GET"])

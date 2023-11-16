@@ -21,6 +21,10 @@ def complete(text):
     return indices[indices.index.str.find(text) != -1]
 
 
+def get_title_id(title):
+    return df[df['Name'] == title]['AppID'].iloc[0]
+
+
 # Function that takes in game title as input and outputs top x most similar games
 def get_recommendations(name, min_rating=0, min_reviews=0, max_price=None, min_release_year=None, max_release_year=None, recommendations_count=10, cosine_sim=cosine_sim):
     # Get the index of the game that matches the title
