@@ -1,7 +1,7 @@
 # Steam Co-Op games recommender
 #### Name: Gabriel Campos
 #### City & Country: Belo Horizonte, Brazil
-#### Video Demo:  <URL HERE>
+#### Video Demo:  [YouTube](https://youtu.be/OgmhahIGl4Q)
 ## Description: 
 My final project is a website that allows users to input a coop game from Steam they like and get a list of similar games they might enjoy playing. There are also filter options to make the recommendations more relevant to the user, such as filtering by the price of the game or year of release. This project utilizes a [Kaggle Steam games dataset](https://www.kaggle.com/datasets/fronkongames/steam-games-dataset/) for the games data.
 
