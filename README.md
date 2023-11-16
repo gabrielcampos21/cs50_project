@@ -1,4 +1,4 @@
-# Steam Co-Op games recommender
+# Steam Co-Op games recommender: PickAGame
 #### Name: Gabriel Campos
 #### City & Country: Belo Horizonte, Brazil
 #### Video Demo:  [YouTube](https://youtu.be/OgmhahIGl4Q)
